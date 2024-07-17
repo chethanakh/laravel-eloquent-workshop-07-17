@@ -1,0 +1,51 @@
+services:
+   laravel-eloquent-workshop-07-17-app:
+    profiles: ["main"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        uid: ${UID}
+    image:  laravel-eloquent-workshop-07-17-app:latest
+    container_name:  laravel-eloquent-workshop-07-17-app-container
+    volumes:
+      - ./:/var/www/html:delegated
+      - ./docker-configs/php.ini:/usr/local/etc/php/php.ini:ro
+    ports:
+      - 8001:80
+      - 5173:5173 #Vite Port
+    depends_on:
+      -  laravel-eloquent-workshop-07-17-mariadb
+
+   laravel-eloquent-workshop-07-17-mariadb:
+    profiles: ["main"]
+    image: mariadb:11.2.2
+    container_name:  laravel-eloquent-workshop-07-17-mariadb
+    command:
+      [
+        '--default-time-zone=+00:00',
+        '--default-authentication-plugin=mysql_native_password'
+      ]
+    ports:
+      - 3307:3306
+    environment:
+      - MARIADB_ROOT_PASSWORD=root
+    volumes:
+      -  laravel-eloquent-workshop-07-17-mariadb-data:/var/lib/mysql
+
+   laravel-eloquent-workshop-07-17-phpmyadmin:
+    profiles: ["main"]
+    image: phpmyadmin/phpmyadmin:latest
+    container_name:  laravel-eloquent-workshop-07-17-phpmyadmin
+    environment:
+      - PMA_HOST= laravel-eloquent-workshop-07-17-mariadb
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+      - UPLOAD_LIMIT=120M
+    ports:
+      - "8002:80"
+    depends_on:
+      -  laravel-eloquent-workshop-07-17-mariadb
+
+volumes:
+  laravel-eloquent-workshop-07-17-mariadb-data:
