@@ -38,7 +38,7 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     container_name:  laravel-eloquent-workshop-07-17-phpmyadmin
     environment:
-      - PMA_HOST= laravel-eloquent-workshop-07-17-mariadb
+      - PMA_HOST=laravel-eloquent-workshop-07-17-mariadb
       - PMA_USER=root
       - PMA_PASSWORD=root
       - UPLOAD_LIMIT=120M
