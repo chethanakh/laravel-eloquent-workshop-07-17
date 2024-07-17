@@ -6,8 +6,8 @@ services:
       dockerfile: Dockerfile
       args:
         uid: ${UID}
-    image:  laravel-eloquent-workshop-07-17-app:latest
-    container_name:  laravel-eloquent-workshop-07-17-app-container
+    image: laravel-eloquent-workshop-07-17-app:latest
+    container_name: laravel-eloquent-workshop-07-17-app-container
     volumes:
       - ./:/var/www/html:delegated
       - ./docker-configs/php.ini:/usr/local/etc/php/php.ini:ro
@@ -15,12 +15,12 @@ services:
       - 8001:80
       - 5173:5173 #Vite Port
     depends_on:
-      -  laravel-eloquent-workshop-07-17-mariadb
+      - laravel-eloquent-workshop-07-17-mariadb
 
    laravel-eloquent-workshop-07-17-mariadb:
     profiles: ["main"]
     image: mariadb:11.2.2
-    container_name:  laravel-eloquent-workshop-07-17-mariadb
+    container_name: laravel-eloquent-workshop-07-17-mariadb
     command:
       [
         '--default-time-zone=+00:00',
@@ -36,7 +36,7 @@ services:
    laravel-eloquent-workshop-07-17-phpmyadmin:
     profiles: ["main"]
     image: phpmyadmin/phpmyadmin:latest
-    container_name:  laravel-eloquent-workshop-07-17-phpmyadmin
+    container_name: laravel-eloquent-workshop-07-17-phpmyadmin
     environment:
       - PMA_HOST=laravel-eloquent-workshop-07-17-mariadb
       - PMA_USER=root
@@ -45,7 +45,7 @@ services:
     ports:
       - "8002:80"
     depends_on:
-      -  laravel-eloquent-workshop-07-17-mariadb
+      - laravel-eloquent-workshop-07-17-mariadb
 
 volumes:
   laravel-eloquent-workshop-07-17-mariadb-data:
